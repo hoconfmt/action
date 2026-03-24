@@ -40,7 +40,7 @@ runs:
       with:
         repository: hoconfmt/hoconfmt
         file-re: "(^|/)hoconfmt$"
-        version: "v0.1.3"
+        version: "v0.1.4"
         destination: "${{ github.workspace }}/../hoconfmt"
     - id: format
       env:
