@@ -1,0 +1,14 @@
+{
+    "problemMatcher": [
+        {
+            "owner": "match-syntax",
+            "pattern": [
+                {
+                    "regexp": "^(mixed line endings \\(.*?\\)): (.*)$",
+                    "message": 1,
+                    "file": 2
+                }
+            ]
+        }
+    ]
+}

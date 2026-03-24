@@ -1,0 +1,63 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+    types:
+      - 'opened'
+      - 'reopened'
+      - 'synchronize'
+
+permissions: {}
+
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: "Default"
+            runner: ubuntu-latest
+            indentation: 2
+            artifact-name: default
+            suppress-summary: 1
+          - name: "Slim"
+            runner: ubuntu-slim
+            indentation: 4
+
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      - name: Format
+        uses: ./
+        with:
+          hocon-files: |
+            test/1.hocon
+            test/2.hocon
+            test/3.hocon
+            test/4.hocon
+          artifact-name: ${{ matrix.artifact-name }}
+          indentation: ${{ matrix.indentation }}
+          suppress-failure: 1
+
+      - name: Report
+        shell: bash
+        run: |
+          : Report
+          (
+            echo '# format'
+            echo '```diff'
+            git diff || true
+            echo '```'
+          ) | tee -a "$GITHUB_STEP_SUMMARY"
