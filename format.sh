@@ -33,7 +33,7 @@ errors=$(mktemp)
   if [ -n "$LIST" ]; then
     cat "$LIST"
   fi
-) | xargs -P ${job_count} -0 -n1 $GITHUB_WORKSPACE/../hoconfmt --write --commas trailing
+) | xargs -P ${job_count} -0 -n1 $GITHUB_WORKSPACE/../hoconfmt --write --commas commas
 
 : Report
 files=$(mktemp)
